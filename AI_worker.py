@@ -1,13 +1,20 @@
 import torch
 import cv2
+import os
+import gdown
 from model import Unet
 from torchvision.transforms import ToTensor
 from torchvision.utils import save_image
 
 PATH2MODEL = 'resources/model.pth'
+URL = 'https://drive.google.com/uc?export=download&id=1NkbKbaw2rzP5-1dwkJ0NLilqkblhKwD6'
 SIZE = 512
 class ai_worker():
     def _init_model(self):
+        if not os.path.exists(PATH2MODEL):
+            os.mkdir('resources')
+            gdown.download(URL, PATH2MODEL, quiet=False)
+
         self.model = Unet()
         self.model.load_state_dict(torch.load(PATH2MODEL))
         self.model.to(self.device)
