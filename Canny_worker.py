@@ -1,11 +1,9 @@
 import cv2
+import numpy as np
 
-SIZE = 512
-
-class canny_worker():
-
+class canny_worker:
     def _green_extractor(self, img):
-        green = img.copy()
+        green = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
         green[:,:,0] = 0
         green[:,:,2] = 0
 
@@ -18,13 +16,13 @@ class canny_worker():
 
         return green_clahe
 
-    def __init__(self, path2img, name):
-        self.name = name
-        self.img = cv2.resize(cv2.imread(path2img, cv2.IMREAD_COLOR),(SIZE,SIZE))
+    def __init__(self):
+        pass
 
-    def seg(self):
-        green = self._green_extractor(self.img)
+    def seg(self, img, low, high):
+        green = self._green_extractor(img)
         blurred = cv2.GaussianBlur(green,(5,5),1.4)
-        edges = cv2.Canny(blurred[:,:,1],20,35)
-        cv2.imwrite(f'output/{self.name}_canny.png',edges)
+        edges = cv2.Canny(blurred[:,:,1], low, high) # 20 , 35
+
+        return edges
 
