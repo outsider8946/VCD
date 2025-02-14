@@ -11,6 +11,7 @@ PATH2MODEL = "C:\\Users\\abram\\Downloads\\model.pth"
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 def _preprocessing(content):
+    '''Предоработка изображения для нейронной сети'''
     buffer = np.frombuffer(content,dtype=np.uint8)
     img = cv2.imdecode(buffer, cv2.IMREAD_GRAYSCALE)
     img = cv2.resize(img, (512,512))
@@ -18,6 +19,7 @@ def _preprocessing(content):
     return v2.ToTensor()(img).unsqueeze(0).to(DEVICE)
 
 def _load_model():
+    '''Загрузка нейронной'''
     model = Unet()
     model.load_state_dict(torch.load(PATH2MODEL))
     model.to(DEVICE)
@@ -28,7 +30,7 @@ def _load_model():
 print(f'loading model... available device {DEVICE}')
 seg_model =_load_model()
 
-cluster_model = SpectralClustering(
+cluster_model = SpectralClustering( #модель кластеризации
     n_clusters=2,
     affinity='nearest_neighbors',
     n_neighbors=3,
@@ -39,6 +41,7 @@ cluster_model = SpectralClustering(
 app = FastAPI()
 
 def _get_points(content):
+    '''Получение координат контуров с помощью ИИ и Canny'''
     tensor  = _preprocessing(content)
     out = seg_model(tensor)
     mask = out[0].cpu().detach().permute(1,2,0)
@@ -55,6 +58,7 @@ def _get_points(content):
     return canny_points
 
 def _get_points_in_rectangle(points, rect):
+    '''Выбор точек внутри прямоугольника'''
     result = []
     x1,y1,x2,y2 = rect
 
@@ -65,6 +69,7 @@ def _get_points_in_rectangle(points, rect):
     return result
 
 def _get_clusters(points):
+    '''Кластеризация точек в прямоугольнике'''
     cluster1 = []
     cluster2 = []
     labels = cluster_model.fit_predict(points)

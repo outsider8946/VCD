@@ -1,6 +1,7 @@
 import tkinter as tk
 
 class CanvasManager:
+    '''Класс для отрисовки результата алгоритмов'''
     def __init__(self, root, tk_image):
         self.root = root
         self.tk_image = tk_image
@@ -34,13 +35,13 @@ class CanvasManager:
     def button_press(self, x, y):
         self.clicks += 1
 
-        if self.clicks == 1:
+        if self.clicks == 1: #если нажали 1 раз - сохраняем точку
             self.x1 = x
             self.y1 = y
 
             return None
 
-        elif self.clicks == 2:
+        elif self.clicks == 2: #если нажали 2 раза - сохраняем прямоугольник
             self.x2 = x
             self.y2 = y
             self.clicks = 0

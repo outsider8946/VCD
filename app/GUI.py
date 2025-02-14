@@ -5,6 +5,7 @@ from canvas_manager import CanvasManager
 from sender import Sender
 
 class GUI:
+    '''Класс для взаимодействия пользователя с алгоритмом'''
     def __init__(self, root):
         self.root = root
         self.load_image()
@@ -14,6 +15,7 @@ class GUI:
         self.canvas_manager.canvas.bind("<ButtonPress-1>", self.on_button_press)
 
     def load_image(self):
+        '''Загрузка изображения'''
         self.file_path = filedialog.askopenfilename(filetypes=[("Image files", "*.jpg;*.jpeg;*.png;*.bmp")])
 
         if not self.file_path:
@@ -28,6 +30,7 @@ class GUI:
         self.root.geometry(f"{self.image.width}x{self.image.height}")
 
     def on_button_press(self, event):
+        '''Событие обработки нажатия мыши'''
         rectangle = self.canvas_manager.button_press(event.x, event.y)
         
         if isinstance(rectangle, list):
