@@ -1,5 +1,7 @@
 import cv2
+import os
 import torch
+import gdown
 import numpy as np
 from model import Unet
 from typing import List
@@ -8,6 +10,9 @@ from sklearn.cluster import SpectralClustering
 from fastapi import FastAPI, File, UploadFile, HTTPException 
 
 PATH2MODEL = "resources/model.pth"
+MODEL_ID = "1EoNZ7OHkj3bCv0EMfYJFI44y1GMP7Fxt"
+URL = f"https://drive.google.com/uc?id={MODEL_ID}"
+
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 def _preprocessing(content):
@@ -18,14 +23,24 @@ def _preprocessing(content):
 
     return v2.ToTensor()(img).unsqueeze(0).to(DEVICE)
 
+def _download_model():
+    if not os.path.exists('resources'):
+        os.mkdir('resources')
+    
+    if not os.path.exists('resources/model.pth'):
+        print('downloadibng model...')
+        gdown.download(URL, PATH2MODEL, quiet=False)
+
 def _load_model():
-    '''Загрузка нейронной'''
+    '''Загрузка нейронной сети'''
     model = Unet()
     model.load_state_dict(torch.load(PATH2MODEL))
     model.to(DEVICE)
     model.eval()
 
     return model
+
+_download_model()
 
 print(f'loading model... available device {DEVICE}')
 seg_model =_load_model()
