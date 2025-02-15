@@ -1,4 +1,3 @@
-import tkinter as tk
 from tkinter import filedialog
 from PIL import Image, ImageTk
 from canvas_manager import CanvasManager
@@ -52,8 +51,3 @@ class GUI:
     def run(self):
         self.canvas_manager.update_canvas()
         self.root.mainloop()
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = GUI(root)
-    app.run()

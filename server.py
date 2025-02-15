@@ -7,7 +7,7 @@ from torchvision.transforms import v2
 from sklearn.cluster import SpectralClustering
 from fastapi import FastAPI, File, UploadFile, HTTPException 
 
-PATH2MODEL = "C:\\Users\\abram\\Downloads\\model.pth"
+PATH2MODEL = "resources/model.pth"
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 def _preprocessing(content):
