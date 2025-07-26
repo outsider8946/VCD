@@ -12,4 +12,4 @@ COPY . .
 RUN mkdir -p app/resources
 RUN gdown --id "1EoNZ7OHkj3bCv0EMfYJFI44y1GMP7Fxt" --output app/resources/model.pth
 
-CMD ["streamlit", "run", "app/streamlit_app.py"]
+CMD ["streamlit", "run", "app/app.py"]

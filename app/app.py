@@ -15,6 +15,8 @@ if 'rect' not in st.session_state:
 
 st.subheader("Algorith parameters:")
 
+st.write(f'**Device**: {worker.device}')
+
 st.subheader("Clustering")
 for key, value in worker.config.cluster.items():
     st.write(f"**{key}:** {value}")
