@@ -11,14 +11,14 @@ from sklearn.cluster import SpectralClustering
 class Worker():
     def __init__(self):
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
-        self.config = OmegaConf.load('config.yaml')
+        self.config = OmegaConf.load('app/config.yaml')
         self.seg_model = self._load_seg_model()
         self.cluster_model = self._load_cluster_model()
 
 
     def _load_seg_model(self):
         model = Unet()
-        model.load_state_dict(torch.load('resources/model.pth'))
+        model.load_state_dict(torch.load('app/resources/model.pth', weights_only=False, map_location=self.device))
         model.to(self.device)
         
         return model.eval()
