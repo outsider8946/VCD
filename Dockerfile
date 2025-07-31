@@ -19,5 +19,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 RUN mkdir -p app/resources
-RUN gdown --id "1EoNZ7OHkj3bCv0EMfYJFI44y1GMP7Fxt" -O app/resources/model.pth
+RUN gdown --id "1i8HKhsUjmE_K-0HODZubXArWPIY-Nn_x" -O app/resources/model.pth
 CMD ["streamlit", "run", "app/app.py"]
