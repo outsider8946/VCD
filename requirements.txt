@@ -59,9 +59,12 @@ tenacity==9.1.2
 threadpoolctl==3.6.0
 tifffile==2025.5.10
 toml==0.10.2
-torch==2.7.1+cu118
-torchaudio==2.7.1+cu118
-torchvision==0.22.1+cu118
+
+--extra-index-url https://download.pytorch.org/whl/cu118
+torch==2.7.1
+torchaudio==2.7.1
+torchvision==0.22.1
+
 tornado==6.5.1
 tqdm==4.67.1
 typing_extensions==4.12.2

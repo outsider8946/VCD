@@ -8,8 +8,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN pip install --upgrade pip
 
-RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118 
-
 WORKDIR /app
 
 COPY requirements.txt .
